@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Tickets Landjuweel 2027</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Kalam:wght@400;700&display=swap">
+<style>
+  @font-face { font-family: "Caveat Brush"; src: url("caveat-brush.woff2") format("woff2"); font-display: swap; }
+  /* Placeholder: one centred card on poster paper, to be filled with the real ticket shop later. */
+  :root {
+    --paper: #fbbf76;
+    --ink-red: #d84e58;
+    --ink-red-deep: #b8333f;
+    --plum: #4e305f;
+    --moss: #4b5c28;
+    --cream: #fbeedd;
+    --font-hand: "Caveat Brush", "Comic Sans MS", "Marker Felt", cursive;
+    --font-body: "Kalam", "Comic Sans MS", "Marker Felt", cursive;
+    color-scheme: light;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  * { box-sizing: border-box; }
+  html, body { background: var(--paper); color: var(--plum); }
+  body {
+    margin: 0;
+    min-height: 100vh;
+    min-height: 100svh;
+    display: grid;
+    place-items: center;
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+    padding-block: 32px;
+    font-family: var(--font-body);
+    font-size: clamp(1.05rem, 0.95rem + 0.5vw, 1.25rem);
+    line-height: 1.5;
+  }
+  main {
+    width: min(100%, 34rem);
+    display: grid;
+    gap: 1.25rem;
+    justify-items: start;
+  }
+  .eyebrow {
+    margin: 0;
+    font-family: var(--font-hand);
+    font-size: 1.4em;
+    color: var(--moss);
+    letter-spacing: 0.02em;
+  }
+  h1 {
+    margin: 0;
+    font-family: var(--font-hand);
+    font-weight: 400;
+    font-size: clamp(3.2rem, 2rem + 8vw, 5.5rem);
+    line-height: 0.9;
+    color: var(--ink-red);
+    transform: rotate(-4deg);
+    transform-origin: left center;
+    text-wrap: balance;
+  }
+  p { margin: 0; max-width: 60ch; }
+  .back {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5em;
+    margin-top: 0.5rem;
+    padding: 0.55em 1.1em;
+    border-radius: 999px;
+    background: var(--moss);
+    color: var(--cream);
+    font-family: var(--font-hand);
+    font-size: 1.3em;
+    text-decoration: none;
+    transition: background .2s ease, transform .2s ease;
+  }
+  .back:hover { background: var(--plum); transform: rotate(-2deg); }
+  .back:focus-visible { outline: 3px dashed var(--plum); outline-offset: 4px; }
+  @media (prefers-reduced-motion: reduce) { .back { transition: none; } }
+</style>
+</head>
+<body>
+<main>
+  <p class="eyebrow">Landjuweel 2027 · Ruigoord</p>
+  <h1>Tickets</h1>
+  <p>De ticketverkoop opent binnenkort. Op deze pagina komt de link naar de kaartverkoop.</p>
+  <a class="back" href="index.html">← Terug naar de poster</a>
+</main>
+</body>
+</html>

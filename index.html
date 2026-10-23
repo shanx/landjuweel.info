@@ -2,14 +2,152 @@
 <html lang="nl">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Landjuweel 2026</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Landjuweel 2027</title>
+<meta property="og:title" content="Landjuweel 2027">
+<meta property="og:description" content="Landjuweel 2027 in Ruigoord. Koop je tickets.">
+<meta property="og:image" content="https://landjuweel.info/poster-1200.jpg">
+<meta property="og:url" content="https://landjuweel.info/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#fbbf76">
+<link rel="preload" href="caveat-brush.woff2" as="font" type="font/woff2" crossorigin>
+<meta name="description" content="Landjuweel 2027 in Ruigoord. Koop je tickets.">
 <style>
-  body { margin: 0; background: #111; display: flex; justify-content: center; }
-  img { max-width: 100%; height: auto; display: block; }
+  @font-face { font-family: "Caveat Brush"; src: url("caveat-brush.woff2") format("woff2"); font-display: swap; }
+  /* Layout: the poster is the page. One portrait sheet, centered on its own paper colour,
+     sized to the viewport height on wide screens and to the width on phones. */
+  :root {
+    --paper: #fbbf76;      /* poster background */
+    --ink-red: #d84e58;    /* date / call-to-action lettering */
+    --ink-red-deep: #b8333f;
+    --plum: #4e305f;       /* title lettering */
+    --moss: #4b5c28;       /* serpent green */
+    --font-hand: "Caveat Brush", "Comic Sans MS", "Marker Felt", cursive;
+    --ratio: 1829 / 2576;
+    color-scheme: light;
+  }
+
+  html, body { background: var(--paper); color: var(--plum); }
+  *, *::before, *::after { box-sizing: border-box; }
+  body { margin: 0; }
+
+  body {
+    min-height: 100vh;
+    min-height: 100svh;
+    display: grid;
+    place-items: center;
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+    padding-block: 16px;
+    box-sizing: border-box;
+    font-family: var(--font-hand);
+  }
+
+  main {
+    width: 100%;
+    display: grid;
+    place-items: center;
+  }
+
+  .poster {
+    position: relative;
+    container-type: inline-size;
+    width: min(100%, calc((100vh - 32px) * var(--ratio)));
+    width: min(100%, calc((100svh - 32px) * var(--ratio)));
+    min-width: min(100%, 300px);
+    max-width: 100%;
+    aspect-ratio: var(--ratio);
+    margin: 0;
+  }
+
+  .poster img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+  }
+
+  /* Ticket link sits in the open pocket left of the serpent,
+     where the dates used to be. Positions are % of the sheet. */
+  .tickets {
+    position: absolute;
+    left: 25.6%;
+    top: 33%;
+    transform: translate(-50%, -50%) rotate(-6deg);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1.2cqw 2.4cqw;
+    font-family: var(--font-hand);
+    font-size: 7cqw;
+    line-height: 0.8;
+    color: var(--ink-red);
+    text-decoration: none;
+    white-space: nowrap;
+    border-radius: 3cqw;
+    transition: color .2s ease, transform .25s ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .tickets span:nth-child(1) { translate: 0.21em 0; }
+  .tickets span:nth-child(3) { translate: -0.21em 0; }
+
+  .tickets::after {
+    content: "";
+    position: absolute;
+    left: 18%;
+    right: 18%;
+    bottom: 0.4cqw;
+    height: 0.5cqw;
+    border-radius: 1cqw;
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform .3s ease;
+  }
+
+  .tickets:hover,
+  .tickets:focus-visible {
+    color: var(--ink-red-deep);
+    transform: translate(-50%, -50%) rotate(-8deg) scale(1.04);
+  }
+  .tickets:hover::after,
+  .tickets:focus-visible::after { transform: scaleX(1); }
+
+  .tickets:focus-visible {
+    outline: 0.5cqw dashed var(--plum);
+    outline-offset: 0.6cqw;
+  }
+
+  .sr-only {
+    position: absolute;
+    width: 1px; height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .tickets, .tickets::after { transition: none; }
+  }
 </style>
 </head>
 <body>
-<a href="Landjuweel2026_poster%20A3_v2-1.jpg"><img src="poster.jpg" alt="Poster Landjuweel 2026"></a>
+<main>
+  <h1 class="sr-only">Landjuweel 2027, Ruigoord</h1>
+  <figure class="poster">
+    <picture>
+      <source type="image/webp"
+              srcset="poster-720.webp 720w, poster-1200.webp 1200w, poster-1829.webp 1829w"
+              sizes="(min-aspect-ratio: 1829/2576) calc((100vh - 32px) * 0.71), calc(100vw - 32px)">
+      <img src="poster-1200.jpg" width="1829" height="2576"
+           alt="Poster Landjuweel 2027, Ruigoord: een groene slang met handen kronkelt over een oranje vlak, met handgeschreven tekst en witte sterretjes.">
+    </picture>
+    <a class="tickets" href="tickets.html">
+      <span>Koop je</span>
+      <span>tickets</span>
+      <span>hier</span>
+    </a>
+  </figure>
+</main>
 </body>
 </html>
