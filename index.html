@@ -4,51 +4,53 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Landjuweel 2027</title>
+<meta name="description" content="Landjuweel 2027 in Ruigoord. Koop je tickets en kijk de aftermovie.">
 <meta property="og:title" content="Landjuweel 2027">
-<meta property="og:description" content="Landjuweel 2027 in Ruigoord. Koop je tickets.">
+<meta property="og:description" content="Landjuweel 2027 in Ruigoord. Koop je tickets en kijk de aftermovie.">
 <meta property="og:image" content="https://landjuweel.info/poster-1200.jpg">
 <meta property="og:url" content="https://landjuweel.info/">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#fbbf76">
 <link rel="preload" href="caveat-brush.woff2" as="font" type="font/woff2" crossorigin>
-<meta name="description" content="Landjuweel 2027 in Ruigoord. Koop je tickets.">
+<script src="vendor/hls.light.min.js" defer></script>
 <style>
   @font-face { font-family: "Caveat Brush"; src: url("caveat-brush.woff2") format("woff2"); font-display: swap; }
-  /* Layout: the poster is the page. One portrait sheet, centered on its own paper colour,
-     sized to the viewport height on wide screens and to the width on phones. */
+
+  /* Layout: the poster is the page. On phones and tablets the aftermovie follows below the
+     sheet; on wide landscape screens poster and film sit side by side on the same paper. */
   :root {
     --paper: #fbbf76;      /* poster background */
-    --ink-red: #d84e58;    /* date / call-to-action lettering */
+    --ink-red: #d84e58;    /* call-to-action lettering */
     --ink-red-deep: #b8333f;
     --plum: #4e305f;       /* title lettering */
     --moss: #4b5c28;       /* serpent green */
+    --cream: #f6ead8;      /* asterisks */
+    --night: #1d1626;      /* video ground */
     --font-hand: "Caveat Brush", "Comic Sans MS", "Marker Felt", cursive;
     --ratio: 1829 / 2576;
+    --gap: clamp(36px, 7vw, 72px);
     color-scheme: light;
   }
 
-  html, body { background: var(--paper); color: var(--plum); }
   *, *::before, *::after { box-sizing: border-box; }
-  body { margin: 0; }
-
+  [hidden] { display: none !important; }
+  html, body { background: var(--paper); color: var(--plum); }
   body {
-    min-height: 100vh;
-    min-height: 100svh;
-    display: grid;
-    place-items: center;
+    margin: 0;
+    overflow-x: clip;
     padding-left: max(16px, env(safe-area-inset-left, 0px));
     padding-right: max(16px, env(safe-area-inset-right, 0px));
-    padding-block: 16px;
-    box-sizing: border-box;
+    padding-block: max(16px, env(safe-area-inset-top, 0px)) max(48px, env(safe-area-inset-bottom, 0px));
     font-family: var(--font-hand);
   }
 
-  main {
-    width: 100%;
+  .page {
     display: grid;
-    place-items: center;
+    justify-items: center;
+    gap: var(--gap);
   }
 
+  /* ---------- poster ---------- */
   .poster {
     position: relative;
     container-type: inline-size;
@@ -59,16 +61,8 @@
     aspect-ratio: var(--ratio);
     margin: 0;
   }
+  .poster img { display: block; width: 100%; height: 100%; max-width: 100%; }
 
-  .poster img {
-    display: block;
-    width: 100%;
-    height: 100%;
-    max-width: 100%;
-  }
-
-  /* Ticket link sits in the open pocket left of the serpent,
-     where the dates used to be. Positions are % of the sheet. */
   .tickets {
     position: absolute;
     left: 25.6%;
@@ -78,7 +72,6 @@
     flex-direction: column;
     align-items: center;
     padding: 1.2cqw 2.4cqw;
-    font-family: var(--font-hand);
     font-size: 7cqw;
     line-height: 0.8;
     color: var(--ink-red);
@@ -90,13 +83,10 @@
   }
   .tickets span:nth-child(1) { translate: 0.21em 0; }
   .tickets span:nth-child(3) { translate: -0.21em 0; }
-
   .tickets::after {
     content: "";
     position: absolute;
-    left: 18%;
-    right: 18%;
-    bottom: 0.4cqw;
+    left: 18%; right: 18%; bottom: 0.4cqw;
     height: 0.5cqw;
     border-radius: 1cqw;
     background: currentColor;
@@ -104,18 +94,157 @@
     transform-origin: left;
     transition: transform .3s ease;
   }
-
-  .tickets:hover,
-  .tickets:focus-visible {
+  .tickets:hover, .tickets:focus-visible {
     color: var(--ink-red-deep);
     transform: translate(-50%, -50%) rotate(-8deg) scale(1.04);
   }
-  .tickets:hover::after,
-  .tickets:focus-visible::after { transform: scaleX(1); }
+  .tickets:hover::after, .tickets:focus-visible::after { transform: scaleX(1); }
+  .tickets:focus-visible { outline: 0.5cqw dashed var(--plum); outline-offset: 0.6cqw; }
 
-  .tickets:focus-visible {
-    outline: 0.5cqw dashed var(--plum);
-    outline-offset: 0.6cqw;
+  /* ---------- aftermovie ---------- */
+  .film {
+    position: relative;
+    width: min(100%, 960px);
+    display: grid;
+    gap: clamp(12px, 2vw, 20px);
+  }
+
+  .film-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 4px 16px;
+    padding-inline: 4px;
+  }
+  .film h2 {
+    margin: 0;
+    font-weight: 400;
+    font-size: clamp(2.6rem, 1.6rem + 5vw, 4.6rem);
+    line-height: 0.9;
+    color: var(--plum);
+    transform: rotate(-3deg);
+    transform-origin: left bottom;
+  }
+  .film-meta {
+    margin: 0;
+    font-size: clamp(1.15rem, 1rem + 0.6vw, 1.5rem);
+    color: var(--moss);
+  }
+  .film-meta time { font-variant-numeric: tabular-nums; }
+
+  .frame {
+    position: relative;
+    container-type: inline-size;
+    width: 100%;
+    max-width: 100%;
+    aspect-ratio: 16 / 9;
+    border: clamp(5px, 0.9vw, 9px) solid var(--moss);
+    border-radius: 30px 18px 34px 20px / 20px 34px 18px 30px;
+    overflow: hidden;
+    background: var(--night);
+  }
+  .frame video {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    background: var(--night);
+  }
+
+  .play {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    padding: 0;
+    border: 0;
+    background: var(--night);
+    color: var(--cream);
+    font: inherit;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .play img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform .6s ease;
+  }
+  .play::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgb(29 22 38 / .7), rgb(29 22 38 / 0) 55%);
+  }
+  .disc {
+    position: relative;
+    z-index: 1;
+    width: clamp(64px, 15cqw, 120px);
+    aspect-ratio: 1;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    background: var(--ink-red);
+    box-shadow: 0 0 0 clamp(4px, 0.9cqw, 8px) var(--paper);
+    transition: transform .3s ease, background .2s ease;
+  }
+  .disc svg { width: 38%; height: 38%; margin-left: 8%; fill: var(--cream); }
+  .play-label {
+    position: absolute;
+    z-index: 1;
+    left: clamp(14px, 4cqw, 36px);
+    bottom: clamp(10px, 3cqw, 28px);
+    font-size: clamp(1.3rem, 5cqw, 2.6rem);
+    line-height: 1;
+    transform: rotate(-3deg);
+    transform-origin: left bottom;
+  }
+  .play:hover img { transform: scale(1.04); }
+  .play:hover .disc, .play:focus-visible .disc { transform: rotate(-8deg) scale(1.08); background: var(--ink-red-deep); }
+  .play:focus-visible { outline: none; }
+  .play:focus-visible .disc { outline: 3px dashed var(--cream); outline-offset: 6px; }
+
+  .star {
+    position: absolute;
+    width: clamp(28px, 5vw, 46px);
+    fill: var(--cream);
+    pointer-events: none;
+  }
+  .star-a { top: clamp(-34px, -4vw, -22px); right: 16%; transform: rotate(12deg); }
+  .star-b { bottom: -10px; right: -4px; width: clamp(22px, 3.6vw, 34px); transform: rotate(-18deg); }
+
+  .film-error {
+    margin: 0;
+    font-size: 1.2rem;
+    color: var(--ink-red-deep);
+  }
+
+  /* ---------- wide landscape screens: side by side ---------- */
+  @media (min-width: 1100px) and (min-aspect-ratio: 5/4) {
+    body { padding-block: 16px; }
+    .page {
+      grid-template-columns: auto minmax(0, 1fr);
+      align-items: center;
+      justify-items: start;
+      column-gap: clamp(40px, 5vw, 96px);
+      max-width: 1760px;
+      min-height: calc(100vh - 32px);
+      min-height: calc(100svh - 32px);
+      margin-inline: auto;
+    }
+    .poster {
+      width: calc((100vh - 32px) * var(--ratio));
+      width: calc((100svh - 32px) * var(--ratio));
+      justify-self: end;
+    }
+    .film { justify-self: start; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .tickets, .tickets::after, .play img, .disc { transition: none; }
   }
 
   .sr-only {
@@ -125,15 +254,12 @@
     clip: rect(0 0 0 0);
     white-space: nowrap;
   }
-
-  @media (prefers-reduced-motion: reduce) {
-    .tickets, .tickets::after { transition: none; }
-  }
 </style>
 </head>
 <body>
-<main>
+<main class="page">
   <h1 class="sr-only">Landjuweel 2027, Ruigoord</h1>
+
   <figure class="poster">
     <picture>
       <source type="image/webp"
@@ -148,6 +274,72 @@
       <span>hier</span>
     </a>
   </figure>
+
+  <section class="film" aria-labelledby="film-title">
+    <svg class="star star-a" viewBox="0 0 40 40" aria-hidden="true"><path d="M18 2h4l-.6 13.6 11.3-7.6 2 3.4-12 6.6 12 6.6-2 3.4-11.3-7.6L22 38h-4l.6-13.6-11.3 7.6-2-3.4 12-6.6-12-6.6 2-3.4 11.3 7.6z"/></svg>
+    <div class="film-head">
+      <h2 id="film-title">Aftermovie</h2>
+      <p class="film-meta">Kijk terug op de vorige editie · <time datetime="PT2M41S">2:41</time></p>
+    </div>
+    <div class="frame">
+      <video id="aftermovie" playsinline preload="none" aria-label="Aftermovie Landjuweel"></video>
+      <button class="play" id="play" type="button" aria-label="Speel de aftermovie af">
+        <img src="video/aftermovie/poster.jpg" alt="" loading="lazy" decoding="async" width="1280" height="720">
+        <span class="disc"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3.5v17a1 1 0 0 0 1.5.86l14-8.5a1 1 0 0 0 0-1.72l-14-8.5A1 1 0 0 0 5 3.5z"/></svg></span>
+        <span class="play-label" aria-hidden="true">Speel af</span>
+      </button>
+    </div>
+    <p class="film-error" id="film-error" hidden>De video kan in deze browser niet worden afgespeeld. Probeer een andere browser of werk je browser bij.</p>
+    <svg class="star star-b" viewBox="0 0 40 40" aria-hidden="true"><path d="M18 2h4l-.6 13.6 11.3-7.6 2 3.4-12 6.6 12 6.6-2 3.4-11.3-7.6L22 38h-4l.6-13.6-11.3 7.6-2-3.4 12-6.6-12-6.6 2-3.4 11.3 7.6z"/></svg>
+  </section>
 </main>
+
+<script>
+  (function () {
+    var SRC = "video/aftermovie/master.m3u8";
+    var video = document.getElementById("aftermovie");
+    var button = document.getElementById("play");
+    var error = document.getElementById("film-error");
+    var started = false;
+
+    function start() {
+      if (started) return;
+      var Hls = window.Hls;
+      var native = video.canPlayType("application/vnd.apple.mpegurl");
+
+      if (Hls && Hls.isSupported()) {
+        // Adaptive streaming: chooses 480p, 720p or 1080p to suit the screen and connection,
+        // and only fetches the few seconds it needs next.
+        var conn = navigator.connection;
+        var guess = conn && conn.downlink ? conn.downlink * 1e6 * 0.7 : 2.5e6;
+        var hls = new Hls({ capLevelToPlayerSize: true, abrEwmaDefaultEstimate: guess });
+        var retries = 0;
+        hls.on(Hls.Events.ERROR, function (_e, data) {
+          if (!data.fatal) return;
+          if (data.type === Hls.ErrorTypes.NETWORK_ERROR && retries++ < 3) hls.startLoad();
+          else if (data.type === Hls.ErrorTypes.MEDIA_ERROR) hls.recoverMediaError();
+          else { hls.destroy(); error.hidden = false; }
+        });
+        hls.loadSource(SRC);
+        hls.attachMedia(video);
+      } else if (native) {
+        // Safari and iOS stream HLS natively.
+        video.src = SRC;
+      } else {
+        error.hidden = false;
+        return;
+      }
+
+      started = true;
+      button.hidden = true;
+      video.controls = true;
+      var p = video.play();
+      if (p && p.catch) p.catch(function () { /* the visible controls let the viewer press play */ });
+      video.focus({ preventScroll: true });
+    }
+
+    button.addEventListener("click", start);
+  })();
+</script>
 </body>
 </html>
